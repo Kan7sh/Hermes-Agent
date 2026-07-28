@@ -58,7 +58,7 @@ export function expressServer(app:Express,PORT:number){
                 callbackURL:process.env.CALL_BACK_URL
             },
             async (accessToken:string,refreshToken:string,profile:any,done:any)=>{
-                console.log("Create user...")
+                console.log("Create user...",profile)
                 return done(null,{})
             }
         )
@@ -100,7 +100,7 @@ export function expressServer(app:Express,PORT:number){
     app.get("/auth/me",(req:any,res:any)=>{
         if(!req.user) return res.status(401).json({error:"Not Logged in"});
         res.json(req.user);
-        
+
     })
 
 }
