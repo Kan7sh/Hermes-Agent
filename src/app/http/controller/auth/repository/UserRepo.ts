@@ -1,5 +1,6 @@
 import { generateTokens } from "@/app/helpers/jwt";
 import { User } from "@/models/UserSchema";
+import { GoogleUserType } from "@/types/user-types";
 
 export class UserRepo {
   private static instance: UserRepo;

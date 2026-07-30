@@ -5,7 +5,8 @@ import { handleExpressError } from '../exceptions/handleExpressError';
 import passport from 'passport';
 import session from 'express-session';
 import {Strategy as GoogleStrategy} from "passport-google-oauth20";
-import MongoStore from "connect-mongo";;
+import MongoStore from "connect-mongo";import { UserRepo } from '@/app/http/controller/auth/repository/UserRepo';
+;
 
 export function expressServer(app:Express,PORT:number){
     const router = Router();
@@ -59,6 +60,8 @@ export function expressServer(app:Express,PORT:number){
             },
             async (accessToken:string,refreshToken:string,profile:any,done:any)=>{
                 console.log("Create user...",profile)
+                const userRepo = UserRepo.getInstance();
+                const user = await userRepo.createUser(profile,{accessToken,refreshToken}) 
                 return done(null,{})
             }
         )
