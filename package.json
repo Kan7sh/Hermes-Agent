@@ -12,6 +12,7 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "@langchain/core": "^1.2.4",
     "@types/express": "^5.0.6",
     "@types/node": "^26.1.1",
     "connect-mongo": "^6.0.0",
@@ -21,11 +22,13 @@
     "express": "^5.2.1",
     "express-session": "^1.19.0",
     "jsonwebtoken": "^9.0.3",
+    "langchain": "^1.5.4",
     "mongoose": "^9.8.0",
     "nodemon": "^3.1.14",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
-    "tsconfig-paths": "^4.2.0"
+    "tsconfig-paths": "^4.2.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",

@@ -1,4 +1,4 @@
-import { generateTokens } from "@/app/helpers/jwt";
+import { generateTokens } from "@/helpers/jwt";
 import { User } from "@/models/UserSchema";
 import { GoogleUserType } from "@/types/user-types";
 

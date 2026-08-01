@@ -23,3 +23,7 @@ export type GoogleUserType = {
         email_verified:boolean;
     };
 }
+
+export interface UserData {
+    userId:string 
+}
