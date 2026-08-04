@@ -1,9 +1,32 @@
 import {tool} from "@langchain/core/tools";
 import {z} from "zod";
 import path from "path";
+import { queryVectordb } from "../pipelines/retriever";
+import { bM25Retriever, formatDocumentAsString } from "../pipelines/keyworkRetriever";
+import { customLLMExtractor } from "../custom-extractor/customLLMExtractor";
 
 export const searchMemoryTool = tool(
     async ({query},config)=>{
+
+        const userId = config.configurable?.userId;
+        const memoryRoot = path.resolve(process.cwd(),"public","memory");
+
+        const memoryStr = new MemoryHandler(memoryRoot,{userId,projectId});
+        let relevanLongTermMemory = ''
+        const archiveLog = await memoryStr.readArchiveFile()
+        const vectorData = await queryVectordb({userId:userId,query});
+        const docToString = formatDocumentAsString(vectorData?.retrievedDocs);
+        relevanLongTermMemory+=`\n\n#<data_retrieved_from_vector_db>  \n${docToString}\n\n</data_retrieved_from_vector_db>`
+
+        if(archiveLog.exists){
+            const bm25Data = await bM25Retriever(archiveLog?.data as string,query);
+            relevanLongTermMemory+=`\n\n#<data_retrieved_from_daily_log_access>${bm25Data}</data_retrieved_from_daily_log_access>`
+        }
+
+        const filteredData = await customLLMExtractor(query,relevanLongTermMemory);
+        const longTermMemory = `# Relevant LTM Layer\n${filteredData||"No relevant long-term memories found."}`
+        return `${longTermMemory}`;
+
 
     },{
         name:"search_memory",
