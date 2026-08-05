@@ -76,7 +76,7 @@ export async function appendAFile(
     return `Appended file: ${relativePath}`;
 }
 
-function todayDateString(now = new Date()) {
+export function todayDateString(now = new Date()) {
     return now.toISOString().slice(0, 10);
 }
 

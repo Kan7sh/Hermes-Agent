@@ -8,6 +8,7 @@ import { customLLMExtractor } from "../custom-extractor/customLLMExtractor";
 export const searchMemoryTool = tool(
     async ({query},config)=>{
 
+        const projectId = config.configurable?.projectId;
         const userId = config.configurable?.userId;
         const memoryRoot = path.resolve(process.cwd(),"public","memory");
 
